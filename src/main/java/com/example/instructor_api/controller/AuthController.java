@@ -24,25 +24,20 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public LoginResponse loginUser(
-        @RequestBody RegisterRequest request
-) {
+    public LoginResponse loginUser(@RequestBody RegisterRequest request) {
 
-    if (
-    request.email.equals("admin@admin.com")
-    &&
-    request.password.equals("pwd12345")
-) {
+        boolean validCredentials
+                = request.email.equals("admin@admin.com")
+                && request.password.equals("pwd12345");
 
-return new LoginResponse(
-    "fake-jwt-token", 
-    request.email, 
-    "ADMIN");
-}
+        if (validCredentials) {
+            return new LoginResponse(
+                    "fake-jwt-token",
+                    request.email,
+                    "ADMIN");
+        }
 
-
-    throw new RuntimeException("Invalid email or password");
-
-}
+        throw new RuntimeException("Invalid email or password");
+    }
 
 }
